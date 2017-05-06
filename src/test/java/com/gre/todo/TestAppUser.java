@@ -1,7 +1,7 @@
 package com.gre.todo;
 
 import com.gre.todo.model.AppUser;
-import com.gre.todo.util.HibernateUtil;
+import com.gre.todo.repository.HibernateUtil;
 import junit.framework.TestCase;
 import org.hibernate.Session;
 
