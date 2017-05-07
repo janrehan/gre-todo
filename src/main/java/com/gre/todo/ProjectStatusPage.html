@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Project Progress</title>
+
+	<link rel="stylesheet" href="style.css" type="text/css" media="screen" title="Stylesheet" />
+
+</head>
+<body>
+<form id="projectStatusForm" method="get" wicket:id="projectStatusForm">
+	<fieldset>
+		<legend style="color: #F90">Filter Project</legend>
+		<span>Projects: <select wicket:id="projects"></select></span>
+		<span>Buildings: <select wicket:id="buildings"></select></span>
+		<span>Persons: <select wicket:id="persons"></select></span>
+		<p>
+			<input type="submit" name="Login" value="Apply Filter"/>
+		</p>
+
+	</fieldset>
+
+<div>
+	<p>
+	<table  cellspacing="0"  class="dataview">
+		<tr>
+			<th>PROJECT</th><th>BUILDING</th><th>PERSON</th><th>DONE</th>
+		</tr>
+		<tr wicket:id="rows">
+			<td wicket:id="dataRow"></td>
+		</tr>
+	</table>
+	</p>
+</div>
+</form>
+</body>
+</html>

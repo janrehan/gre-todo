@@ -76,7 +76,7 @@ public class ProjectProgressRepoImpl implements ProjectProgressRepo
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Query query = null;
-		if(projectId==null){
+		if(projectId!=null){
 			query = session.createQuery("FROM ProjectProgress p where p.project.id = :projectId");
 			query.setParameter("projectId", projectId);
 		}else{
