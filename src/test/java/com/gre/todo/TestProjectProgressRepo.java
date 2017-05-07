@@ -15,7 +15,7 @@ public class TestProjectProgressRepo extends TestCase
 	public void testAppRepo()
 	{
 		ProjectProgressRepo projectProgressRepo = new ProjectProgressRepoImpl();
-		List<ProjectProgress> projectProgressResult = projectProgressRepo.findProjectProgressByProjectId(1L);
+		List<ProjectProgress> projectProgressResult = projectProgressRepo.findProjectProgressBy(1L);
 		System.out.println("done");
 	}
 }

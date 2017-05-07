@@ -20,7 +20,7 @@ INSERT INTO `tests`.`person` (`id`, `name`) VALUES (6, 'Nathen');
 
 INSERT INTO `tests`.`project_progress` (`id`, `project_id`,`building_id`,`person_id`,`is_status_done`) VALUES (1, 1,2,1,0);
 INSERT INTO `tests`.`project_progress` (`id`, `project_id`,`building_id`,`person_id`,`is_status_done`) VALUES (2, 1,3,2,0);
-INSERT INTO `tests`.`project_progress` (`id`, `project_id`,`building_id`,`person_id`,`is_status_done`) VALUES (3, 3,4,3,0);
-INSERT INTO `tests`.`project_progress` (`id`, `project_id`,`building_id`,`person_id`,`is_status_done`) VALUES (4, 3,5,3,1);
+INSERT INTO `tests`.`project_progress` (`id`, `project_id`,`building_id`,`person_id`,`is_status_done`) VALUES (3, 2,4,3,0);
+INSERT INTO `tests`.`project_progress` (`id`, `project_id`,`building_id`,`person_id`,`is_status_done`) VALUES (4, 2,5,3,1);
 
 

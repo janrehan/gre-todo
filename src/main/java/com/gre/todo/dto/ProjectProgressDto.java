@@ -1,10 +1,14 @@
 package com.gre.todo.dto;
 
+import org.apache.wicket.util.io.IClusterable;
+
+import java.io.Serializable;
+
 /**
  * this dto can be used on presentation layer to show project progress
  * Created by Jan_R on 06/05/2017.
  */
-public class ProjectProgressDto
+public class ProjectProgressDto implements Serializable
 {
 	private Long projectProgressId;
 	private Long projectId;

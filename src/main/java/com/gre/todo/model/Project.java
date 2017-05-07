@@ -1,6 +1,7 @@
 package com.gre.todo.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Set;
 
 /**
@@ -8,7 +9,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "project")
-public class Project
+public class Project implements Serializable
 {
 
 	@Id
@@ -20,6 +21,16 @@ public class Project
 
 	@OneToMany(mappedBy = "project", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Set<ProjectProgress> projectProgress;
+
+	public Project()
+	{
+	}
+
+	public Project(Long id, String name)
+	{
+		this.id = id;
+		this.name = name;
+	}
 
 	public Long getId()
 	{
