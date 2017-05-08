@@ -8,6 +8,8 @@ import com.gre.todo.model.Project;
 import com.gre.todo.model.ProjectProgress;
 import com.gre.todo.repository.ProjectProgressRepo;
 import com.gre.todo.repository.ProjectProgressRepoImpl;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +19,7 @@ import java.util.List;
  */
 public class ProjectProgressServiceImpl implements ProjectProgressService
 {
-
+	private static final Logger logger =  LogManager.getLogger(ProjectProgressServiceImpl.class);
 	/**
 	 * get all registered projects
 	 *
@@ -27,6 +29,7 @@ public class ProjectProgressServiceImpl implements ProjectProgressService
 	public List<Lookup> findAllProjects()
 	{
 		ProjectProgressRepo projectProgressRepo = new ProjectProgressRepoImpl();
+		logger.info("calling dao to load all projects");
 		List<Project> allProjects = projectProgressRepo.findAllProjects();
 		List<Lookup> projectsLookup = new ArrayList<Lookup>();
 		if (allProjects != null)
@@ -52,6 +55,7 @@ public class ProjectProgressServiceImpl implements ProjectProgressService
 	public List<Lookup> findAllBuildings()
 	{
 		ProjectProgressRepo projectProgressRepo = new ProjectProgressRepoImpl();
+		logger.info("calling dao to load all buildings");
 		List<Building> allBuildings = projectProgressRepo.findAllBuildings();
 		List<Lookup> buildingLookup = new ArrayList<Lookup>();
 		if (allBuildings != null)
@@ -77,6 +81,7 @@ public class ProjectProgressServiceImpl implements ProjectProgressService
 	public List<Lookup> findAllPersons()
 	{
 		ProjectProgressRepo projectProgressRepo = new ProjectProgressRepoImpl();
+		logger.info("calling dao to load persons");
 		List<Person> allPersons = projectProgressRepo.findAllPersons();
 		List<Lookup> personLookup = new ArrayList<Lookup>();
 		if (allPersons != null)
@@ -104,6 +109,7 @@ public class ProjectProgressServiceImpl implements ProjectProgressService
 	public List<ProjectProgressDto> findProjectProgressBy(Long projectId)
 	{
 		ProjectProgressRepo projectProgressRepo = new ProjectProgressRepoImpl();
+		logger.info("calling dao to get project todos");
 		List<ProjectProgress> projectProgressResultList = projectProgressRepo.findProjectProgressBy(projectId);
 		return populateProjectProgressDto(projectProgressResultList);
 	}
@@ -120,6 +126,7 @@ public class ProjectProgressServiceImpl implements ProjectProgressService
 	public List<ProjectProgressDto> findProjectProgressBy(Long projectId, Long buildingId)
 	{
 		ProjectProgressRepo projectProgressRepo = new ProjectProgressRepoImpl();
+		logger.info("calling dao to get project todos");
 		List<ProjectProgress> projectProgressResultList = projectProgressRepo.findProjectProgressBy(projectId, buildingId);
 		return populateProjectProgressDto(projectProgressResultList);
 	}
@@ -137,6 +144,7 @@ public class ProjectProgressServiceImpl implements ProjectProgressService
 	public List<ProjectProgressDto> findProjectProgressBy(Long projectId, Long buildingId, Long personId)
 	{
 		ProjectProgressRepo projectProgressRepo = new ProjectProgressRepoImpl();
+		logger.info("calling dao to get project todos");
 		List<ProjectProgress> projectProgressResultList = projectProgressRepo.findProjectProgressBy(projectId, buildingId, personId);
 		return populateProjectProgressDto(projectProgressResultList);
 	}

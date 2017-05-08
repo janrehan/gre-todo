@@ -1,5 +1,7 @@
-package com.gre.todo;
+package com.gre.todo.web.pages;
 
+import com.gre.todo.util.GreStreamLocator;
+import com.gre.todo.web.pages.ProjectStatusPage;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.protocol.http.WebApplication;
 
@@ -27,7 +29,6 @@ public class WicketApplication extends WebApplication
 	public void init()
 	{
 		super.init();
-
-		// add your configuration here
+		getResourceSettings().setResourceStreamLocator(new GreStreamLocator());
 	}
 }

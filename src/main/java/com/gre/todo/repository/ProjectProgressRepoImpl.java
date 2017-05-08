@@ -4,12 +4,16 @@ import com.gre.todo.model.Building;
 import com.gre.todo.model.Person;
 import com.gre.todo.model.Project;
 import com.gre.todo.model.ProjectProgress;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,6 +21,46 @@ import java.util.List;
  */
 public class ProjectProgressRepoImpl implements ProjectProgressRepo
 {
+	private static final Logger logger = LogManager.getLogger(ProjectProgressRepoImpl.class);
+
+	/**
+	 * find project's associated buildings, person and status info
+	 * by projectId, buildingId and personId
+	 *
+	 * @param projectId
+	 * @return
+	 */
+	@Override
+	public List<ProjectProgress> findProjectProgressBy(Long projectId, Long buildingId, Long personId)
+	{
+		Session session = HibernateUtil.getSessionFactory().openSession();
+
+		CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+		CriteriaQuery criteriaQuery = criteriaBuilder.createQuery();
+		Root<ProjectProgress> projectProgressRoot = criteriaQuery.from(ProjectProgress.class);
+		List<Predicate> predicates = new ArrayList<Predicate>();
+		if (projectId != null)
+		{
+			predicates.add(
+				criteriaBuilder.equal(projectProgressRoot.get("project").get("id"), projectId));
+		}
+		if (buildingId != null)
+		{
+			predicates.add(
+				criteriaBuilder.equal(projectProgressRoot.get("building").get("id"), buildingId));
+		}
+		if (personId != null)
+		{
+			predicates.add(
+				criteriaBuilder.equal(projectProgressRoot.get("person").get("id"), personId));
+		}
+
+		criteriaQuery.select(projectProgressRoot).where(predicates.toArray(new Predicate[]{}));
+
+		List<ProjectProgress> resultList = session.createQuery(criteriaQuery).getResultList();
+		session.close();
+		return resultList;
+	}
 
 	/**
 	 * get all projects
@@ -76,10 +120,12 @@ public class ProjectProgressRepoImpl implements ProjectProgressRepo
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Query query = null;
-		if(projectId!=null){
+		if (projectId != null)
+		{
 			query = session.createQuery("FROM ProjectProgress p where p.project.id = :projectId");
 			query.setParameter("projectId", projectId);
-		}else{
+		} else
+		{
 			query = session.createQuery("FROM ProjectProgress");
 		}
 		List<ProjectProgress> resultList = query.getResultList();
@@ -106,23 +152,5 @@ public class ProjectProgressRepoImpl implements ProjectProgressRepo
 		return resultList;
 	}
 
-	/**
-	 * find project's associated buildings, person and status info
-	 * by projectId, buildingId and personId
-	 *
-	 * @param projectId
-	 * @return
-	 */
-	@Override
-	public List<ProjectProgress> findProjectProgressBy(Long projectId, Long buildingId, Long personId)
-	{
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Query query = session.createQuery("FROM ProjectProgress p where p.project.id = :projectId and p.building.id = :buildingId and p.person.id = :personId");
-		query.setParameter("projectId", projectId);
-		query.setParameter("buildingId", buildingId);
-		query.setParameter("personId", personId);
-		List<ProjectProgress> resultList = query.getResultList();
-		session.close();
-		return resultList;
-	}
+
 }
