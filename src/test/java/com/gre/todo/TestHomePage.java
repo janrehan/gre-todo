@@ -1,7 +1,7 @@
 package com.gre.todo;
 
 import com.gre.todo.web.pages.HomePage;
-import com.gre.todo.web.pages.WicketApplication;
+import com.gre.todo.web.pages.GreApplication;
 import org.apache.wicket.util.tester.WicketTester;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,7 +16,7 @@ public class TestHomePage
 	@Before
 	public void setUp()
 	{
-		tester = new WicketTester(new WicketApplication());
+		tester = new WicketTester(new GreApplication());
 	}
 
 	@Test

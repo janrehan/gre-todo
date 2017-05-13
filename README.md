@@ -34,9 +34,6 @@ How i started coding:
 What is left:
 ================================
 
--- Although page is working fine and functionality is achieved but UI needs be improved
--- UI needs be broken down into components and panels, like some theme which could be reused on all pages.
--- Home Page explaining features and advantages
 -- Test cases
 -- In data grid there should be a check box to mark todos completed or not completed
 

@@ -7,40 +7,39 @@ import com.gre.todo.services.ProjectProgressServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.wicket.AttributeModifier;
-import org.apache.wicket.markup.html.form.*;
+import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.ChoiceRenderer;
+import org.apache.wicket.markup.html.form.DropDownChoice;
+import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.markup.repeater.data.DataView;
 import org.apache.wicket.markup.repeater.data.ListDataProvider;
 import org.apache.wicket.model.AbstractReadOnlyModel;
-import org.apache.wicket.model.Model;
-import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.model.Model;
 
 import java.util.List;
 
 /**
- * this class takes user input params and filter project todos based on those params
+ * this class takes user input params and filter project to do list based on those params
  * initially all todos are shown on page load
  * Created by Jan_R on 07/05/2017.
  */
-public class ProjectStatusPage extends WebPage
+public class TodoListPageContentPanel extends Panel
 {
-
-	private static final Logger logger =  LogManager.getLogger(ProjectStatusPage.class);
-
-	public ProjectStatusPage(final PageParameters parameters)
+	private static final Logger logger =  LogManager.getLogger(TodoListPageContentPanel.class);
+	public TodoListPageContentPanel(String id)
 	{
-		super(parameters);
-		add(new ProjectStatusForm("projectStatusForm"));
+		super(id);
+		add(new TodoListForm("todoListForm"));
 	}
 
 	/**
 	 *
 	 */
-	class ProjectStatusForm extends Form
+	class TodoListForm extends Form
 	{
 		private DropDownChoice<Lookup> projectsLookupChoice;
 		private DropDownChoice<Lookup> buildingLookupChoice;
@@ -50,7 +49,7 @@ public class ProjectStatusPage extends WebPage
 		 * load drop down values
 		 * @param id
 		 */
-		public ProjectStatusForm(String id)
+		public TodoListForm(String id)
 		{
 			super(id);
 			setDefaultModel(new CompoundPropertyModel(this));
@@ -59,7 +58,7 @@ public class ProjectStatusPage extends WebPage
 			populateBuildingDropDown();
 			populatePersonDropDown();
 			logger.info("loading all projects");
-			findProjectProgress(null, null, null);
+			fetchTodosList(null, null, null);
 		}
 
 
@@ -69,14 +68,14 @@ public class ProjectStatusPage extends WebPage
 		public final void onSubmit()
 		{
 			logger.info("filtering projects on form submit");
-			processProjectFilterRequest();
+			processTodoListFilterRequest();
 		}
 
 		/**
 		 * this method takes user input and filter project
 		 * todos based on that input params
 		 */
-		private void processProjectFilterRequest()
+		private void processTodoListFilterRequest()
 		{
 			remove("rows");
 			Long projectId = null;
@@ -92,7 +91,7 @@ public class ProjectStatusPage extends WebPage
 				personId = personLookupChoice.getModel().getObject().getId();
 
 			//call service method to filter projects
-			findProjectProgress(projectId, buildingId, personId);
+			fetchTodosList(projectId, buildingId, personId);
 
 		}
 
@@ -102,7 +101,7 @@ public class ProjectStatusPage extends WebPage
 		 * @param buildingId
 		 * @param personId
 		 */
-		private void findProjectProgress(Long projectId, Long buildingId, Long personId)
+		private void fetchTodosList(Long projectId, Long buildingId, Long personId)
 		{
 
 			ProjectProgressService service = new ProjectProgressServiceImpl();
