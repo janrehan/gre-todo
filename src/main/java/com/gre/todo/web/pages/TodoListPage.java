@@ -9,13 +9,12 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
  * navigation, content and footer panels
  * Created by Jan_R on 07/05/2017.
  */
-public class TodoListPage extends BaseWebTemplate
-{
+public class TodoListPage extends BaseWebTemplate {
 
-	private static final Logger logger =  LogManager.getLogger(TodoListPage.class);
-	public TodoListPage(final PageParameters parameters)
-	{
-		super();
-		replace(new TodoListPageContentPanel(CONTENT_ID));
-	}
+    private static final Logger logger = LogManager.getLogger(TodoListPage.class);
+
+    public TodoListPage(final PageParameters parameters) {
+        super();
+        replace(new TodoListPageContentPanel(CONTENT_ID));
+    }
 }

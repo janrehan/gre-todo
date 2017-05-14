@@ -10,12 +10,10 @@ import java.util.List;
 /**
  * Created by Jan_R on 5/5/2017.
  */
-public class TestProjectProgressRepo extends TestCase
-{
-	public void testAppRepo()
-	{
-		ProjectProgressRepo projectProgressRepo = new ProjectProgressRepoImpl();
-		List<ProjectProgress> projectProgressResult = projectProgressRepo.findProjectProgressBy(1L);
-		System.out.println("done");
-	}
+public class TestProjectProgressRepo extends TestCase {
+    public void testAppRepo() {
+        ProjectProgressRepo projectProgressRepo = new ProjectProgressRepoImpl();
+        List<ProjectProgress> projectProgressResult = projectProgressRepo.findProjectProgressBy(1L);
+        System.out.println("done");
+    }
 }
