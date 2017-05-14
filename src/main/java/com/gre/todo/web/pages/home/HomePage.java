@@ -1,6 +1,7 @@
-package com.gre.todo.web.pages;
+package com.gre.todo.web.pages.home;
 
 
+import com.gre.todo.web.pages.base.BaseWebTemplate;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 

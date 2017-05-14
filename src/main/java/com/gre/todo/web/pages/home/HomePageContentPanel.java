@@ -1,5 +1,6 @@
-package com.gre.todo.web.pages;
+package com.gre.todo.web.pages.home;
 
+import com.gre.todo.web.pages.project.TodoListPage;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.panel.Panel;
 

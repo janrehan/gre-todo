@@ -1,4 +1,4 @@
-package com.gre.todo.web.pages;
+package com.gre.todo.web.pages.common;
 
 import org.apache.wicket.markup.html.panel.Panel;
 

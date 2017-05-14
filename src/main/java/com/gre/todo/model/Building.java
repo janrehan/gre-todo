@@ -17,6 +17,9 @@ public class Building {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "location")
+    private String location;
+
     @OneToMany(mappedBy = "building", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<ProjectProgress> projectProgress;
 
@@ -45,6 +48,14 @@ public class Building {
         this.projectProgress = projectProgress;
     }
 
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -53,7 +64,8 @@ public class Building {
         Building building = (Building) o;
 
         if (!getId().equals(building.getId())) return false;
-        return getName().equals(building.getName());
+        if (!getName().equals(building.getName())) return false;
+        return getLocation().equals(building.getLocation());
 
     }
 
@@ -61,6 +73,7 @@ public class Building {
     public int hashCode() {
         int result = getId().hashCode();
         result = 31 * result + getName().hashCode();
+        result = 31 * result + getLocation().hashCode();
         return result;
     }
 }

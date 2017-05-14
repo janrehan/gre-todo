@@ -1,5 +1,7 @@
-package com.gre.todo.web.pages;
+package com.gre.todo.web.pages.base;
 
+import com.gre.todo.web.pages.common.FooterPanel;
+import com.gre.todo.web.pages.common.NavigationPanel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.wicket.Component;

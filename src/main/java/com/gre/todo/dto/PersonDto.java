@@ -1,26 +1,17 @@
-package com.gre.todo.model;
+package com.gre.todo.dto;
 
-import javax.persistence.*;
-import java.util.Set;
+import java.io.Serializable;
 
 /**
- * Created by Jan_R on 06/05/2017.
+ * Created by Jan_R on 14/05/2017.
  */
-@Entity
-@Table(name = "person")
-public class Person {
+public class PersonDto implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private static final long serialVersionUID = 1L;
+
     private Long id;
-
-    @Column(name = "first_name")
     private String firstName;
-
-    @Column(name = "last_name")
     private String lastName;
-
-    @Column(name = "email")
     private String email;
 
     public Long getId() {
@@ -60,12 +51,12 @@ public class Person {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Person person = (Person) o;
+        PersonDto personDto = (PersonDto) o;
 
-        if (!getId().equals(person.getId())) return false;
-        if (!getFirstName().equals(person.getFirstName())) return false;
-        if (!getLastName().equals(person.getLastName())) return false;
-        return getEmail().equals(person.getEmail());
+        if (!getId().equals(personDto.getId())) return false;
+        if (!getFirstName().equals(personDto.getFirstName())) return false;
+        if (!getLastName().equals(personDto.getLastName())) return false;
+        return getEmail().equals(personDto.getEmail());
 
     }
 

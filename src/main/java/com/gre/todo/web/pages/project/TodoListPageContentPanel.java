@@ -1,6 +1,7 @@
-package com.gre.todo.web.pages;
+package com.gre.todo.web.pages.project;
 
 import com.gre.todo.dto.Lookup;
+import com.gre.todo.dto.PersonDto;
 import com.gre.todo.dto.ProjectProgressDto;
 import com.gre.todo.services.ProjectProgressService;
 import com.gre.todo.services.ProjectProgressServiceImpl;
@@ -41,7 +42,7 @@ public class TodoListPageContentPanel extends Panel {
     class TodoListForm extends Form {
         private DropDownChoice<Lookup> projectsLookupChoice;
         private DropDownChoice<Lookup> buildingLookupChoice;
-        private DropDownChoice<Lookup> personLookupChoice;
+        private DropDownChoice<PersonDto> personLookupChoice;
 
         /**
          * load drop down values
@@ -172,18 +173,22 @@ public class TodoListPageContentPanel extends Panel {
          * method to populate person drop down
          */
         private void populatePersonDropDown() {
-            ProjectProgressService service = new ProjectProgressServiceImpl();
-            List<Lookup> allProjects = service.findAllPersons();
-            Model<Lookup> listModel = new Model<Lookup>();
-            ChoiceRenderer<Lookup> projectRender = new ChoiceRenderer<Lookup>("name", "id");
-            personLookupChoice = new DropDownChoice<Lookup>("persons", listModel, allProjects, projectRender) {
-                @Override
-                protected boolean wantOnSelectionChangedNotifications() {
-                    return true;
-                }
-            };
-            personLookupChoice.setNullValid(true);
-            add(personLookupChoice);
+            try {
+                ProjectProgressService service = new ProjectProgressServiceImpl();
+                List<PersonDto> allPersons = service.findAllPersons();
+                Model<PersonDto> listModel = new Model<PersonDto>();
+                ChoiceRenderer<PersonDto> projectRender = new ChoiceRenderer<PersonDto>("firstName", "id");
+                personLookupChoice = new DropDownChoice<PersonDto>("persons", listModel, allPersons, projectRender) {
+                    @Override
+                    protected boolean wantOnSelectionChangedNotifications() {
+                        return true;
+                    }
+                };
+                personLookupChoice.setNullValid(true);
+                add(personLookupChoice);
+            } catch (Exception ex) {
+                logger.error("exception " + ex);
+            }
         }
 
     }

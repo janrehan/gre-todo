@@ -1,5 +1,6 @@
-package com.gre.todo.web.pages;
+package com.gre.todo.web.pages.project;
 
+import com.gre.todo.web.pages.base.BaseWebTemplate;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.wicket.request.mapper.parameter.PageParameters;

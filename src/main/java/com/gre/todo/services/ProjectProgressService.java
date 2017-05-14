@@ -1,6 +1,7 @@
 package com.gre.todo.services;
 
 import com.gre.todo.dto.Lookup;
+import com.gre.todo.dto.PersonDto;
 import com.gre.todo.dto.ProjectProgressDto;
 import com.gre.todo.model.Building;
 import com.gre.todo.model.Person;
@@ -33,26 +34,14 @@ public interface ProjectProgressService {
      *
      * @return
      */
-    public List<Lookup> findAllPersons();
+    public List<PersonDto> findAllPersons() throws Exception ;
 
     /**
-     * find project's associated buildings, person and status info
-     * by projectId
      *
-     * @param projectId
-     * @return
+     * @param person
      */
-    public List<ProjectProgressDto> findProjectProgressBy(Long projectId);
+    public void savePerson(PersonDto person);
 
-    /**
-     * find project's associated buildings, person and status info
-     * by projectId and buildingId
-     *
-     * @param projectId
-     * @param buildingId
-     * @return
-     */
-    public List<ProjectProgressDto> findProjectProgressBy(Long projectId, Long buildingId);
 
     /**
      * find project's associated buildings, person and status info

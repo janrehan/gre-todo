@@ -27,32 +27,6 @@ public interface ProjectProgressRepo {
     public List<Building> findAllBuildings();
 
     /**
-     * get all persons
-     *
-     * @return
-     */
-    public List<Person> findAllPersons();
-
-    /**
-     * find project's associated buildings, person and status info
-     * by projectId
-     *
-     * @param projectId
-     * @return
-     */
-    public List<ProjectProgress> findProjectProgressBy(Long projectId);
-
-    /**
-     * find project's associated buildings, person and status info
-     * by projectId and buildingId
-     *
-     * @param projectId
-     * @param buildingId
-     * @return
-     */
-    public List<ProjectProgress> findProjectProgressBy(Long projectId, Long buildingId);
-
-    /**
      * find project's associated buildings, person and status info
      * by projectId, buildingId and personId
      *

@@ -13,7 +13,7 @@ import java.util.List;
 public class TestProjectProgressService extends TestCase {
     public void testAppService() {
         ProjectProgressService projectProgressService = new ProjectProgressServiceImpl();
-        List<ProjectProgressDto> projectProgressDtoList = projectProgressService.findProjectProgressBy(1L);
+        List<ProjectProgressDto> projectProgressDtoList = projectProgressService.findProjectProgressBy(1L,null,null);
         System.out.println("done");
     }
 }

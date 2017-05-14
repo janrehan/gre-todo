@@ -85,60 +85,6 @@ public class ProjectProgressRepoImpl implements ProjectProgressRepo {
         return resultList;
     }
 
-    /**
-     * get all persons
-     *
-     * @return
-     */
-    @Override
-    public List<Person> findAllPersons() {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        Query query = session.createQuery("FROM Person");
-        List<Person> resultList = query.getResultList();
-        session.close();
-        return resultList;
-    }
-
-
-    /**
-     * find project's associated buildings, person and status info
-     * by projectId
-     *
-     * @param projectId
-     * @return
-     */
-    @Override
-    public List<ProjectProgress> findProjectProgressBy(Long projectId) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        Query query = null;
-        if (projectId != null) {
-            query = session.createQuery("FROM ProjectProgress p where p.project.id = :projectId");
-            query.setParameter("projectId", projectId);
-        } else {
-            query = session.createQuery("FROM ProjectProgress");
-        }
-        List<ProjectProgress> resultList = query.getResultList();
-        session.close();
-        return resultList;
-    }
-
-    /**
-     * find project's associated buildings, person and status info
-     * by projectId and buildingId
-     *
-     * @param projectId
-     * @return
-     */
-    @Override
-    public List<ProjectProgress> findProjectProgressBy(Long projectId, Long buildingId) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        Query query = session.createQuery("FROM ProjectProgress p where p.project.id = :projectId and p.buildingId = :buildingId");
-        query.setParameter("projectId", projectId);
-        query.setParameter("buildingId", buildingId);
-        List<ProjectProgress> resultList = query.getResultList();
-        session.close();
-        return resultList;
-    }
 
 
 }
