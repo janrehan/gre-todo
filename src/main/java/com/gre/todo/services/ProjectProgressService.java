@@ -1,13 +1,9 @@
 package com.gre.todo.services;
 
+import com.gre.todo.dto.BuildingDto;
 import com.gre.todo.dto.Lookup;
 import com.gre.todo.dto.PersonDto;
 import com.gre.todo.dto.ProjectProgressDto;
-import com.gre.todo.model.Building;
-import com.gre.todo.model.Person;
-import com.gre.todo.model.Project;
-import com.gre.todo.model.ProjectProgress;
-
 import java.util.List;
 
 /**
@@ -27,7 +23,15 @@ public interface ProjectProgressService {
      *
      * @return
      */
-    public List<Lookup> findAllBuildings();
+    public List<BuildingDto> findAllBuildings();
+
+
+    /**
+     *
+     * @param buildingDto
+     */
+    public void saveBuilding(BuildingDto buildingDto);
+
 
     /**
      * get all persons

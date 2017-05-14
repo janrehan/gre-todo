@@ -9,6 +9,7 @@ import java.io.Serializable;
  * Created by Jan_R on 06/05/2017.
  */
 public class ProjectProgressDto implements Serializable {
+    private static final long serialVersionUID = 1L;
     private Long projectProgressId;
     private Long projectId;
     private String projectName;

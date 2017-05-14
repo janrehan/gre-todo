@@ -1,5 +1,6 @@
-package com.gre.todo.web.pages.person;
+package com.gre.todo.web.pages.building;
 
+import com.gre.todo.dto.BuildingDto;
 import com.gre.todo.dto.PersonDto;
 import com.gre.todo.services.ProjectProgressService;
 import com.gre.todo.services.ProjectProgressServiceImpl;
@@ -25,32 +26,30 @@ import java.util.List;
 /**
  * Created by Jan_R on 15/05/2017.
  */
-public class PersonPageContentPanel extends Panel {
-    private static final Logger logger = LogManager.getLogger(PersonPageContentPanel.class);
+public class BuildingPageContentPanel extends Panel {
+    private static final Logger logger = LogManager.getLogger(BuildingPageContentPanel.class);
 
-    public PersonPageContentPanel(String id) {
+    public BuildingPageContentPanel(String id) {
         super(id);
-        PersonDto personDto = new PersonDto();
-        add(new PersonForm("personForm", new Model<PersonDto>(personDto)));
+        BuildingDto buildingDto = new BuildingDto();
+        add(new BuildingForm("buildingForm", new Model<BuildingDto>(buildingDto)));
     }
 
-    class PersonForm extends Form<PersonDto> {
-        public PersonForm(String id, IModel<PersonDto> model) {
-            super(id, new CompoundPropertyModel<PersonDto>(model));
-            //first name
-            TextField<String> firstName = new TextField<String>("firstName");
-            firstName.setRequired(true);
-            add(firstName);
+    class BuildingForm extends Form<BuildingDto> {
+        public BuildingForm(String id, IModel<BuildingDto> model) {
+            super(id, new CompoundPropertyModel<BuildingDto>(model));
+            //name
+            TextField<String> name = new TextField<String>("name");
+            name.setRequired(true);
+            add(name);
             //last name
-            TextField<String> lastName = new TextField<String>("lastName");
-            lastName.setRequired(true);
-            add(lastName);
-            //email
-            TextField<String> emailField = new TextField<String>("email");
-            emailField.setRequired(true);
-            add(emailField);
+            TextField<String> location = new TextField<String>("location");
+            location.setRequired(true);
+            add(location);
+            //feedback
             add(new FeedbackPanel("feedback"));
-            getAllPersons();
+            //load all buildings to show in a grid
+            getAllBuildings();
         }
 
         /**
@@ -58,30 +57,29 @@ public class PersonPageContentPanel extends Panel {
          */
         public final void onSubmit() {
             ProjectProgressService service = new ProjectProgressServiceImpl();
-            service.savePerson(getModel().getObject());
-            getSession().success("Person added successfully");
+            service.saveBuilding(getModel().getObject());
+            getSession().success("Building added successfully");
             remove("rows");
             //reload all persons to show in the grid
-            getAllPersons();
+            getAllBuildings();
         }
 
         /**
          *
          */
-        private void getAllPersons() {
+        private void getAllBuildings() {
             try {
                 ProjectProgressService service = new ProjectProgressServiceImpl();
-                logger.info("calling service method to get all persons");
-                List<PersonDto> personDtoList = service.findAllPersons();
-                ListDataProvider<PersonDto> listDataProvider = new ListDataProvider<PersonDto>(personDtoList);
-                DataView<PersonDto> dataView = new DataView<PersonDto>("rows", listDataProvider) {
+                logger.info("calling service method to get all buildings");
+                List<BuildingDto> buildingDtoList = service.findAllBuildings();
+                ListDataProvider<BuildingDto> listDataProvider = new ListDataProvider<BuildingDto>(buildingDtoList);
+                DataView<BuildingDto> dataView = new DataView<BuildingDto>("rows", listDataProvider) {
                     @Override
-                    protected void populateItem(final Item<PersonDto> item) {
-                        PersonDto personDto = item.getModelObject();
+                    protected void populateItem(final Item<BuildingDto> item) {
+                        BuildingDto buildingDto = item.getModelObject();
                         RepeatingView repeatingView = new RepeatingView("dataRow");
-                        repeatingView.add(new Label(repeatingView.newChildId(), personDto.getFirstName()));
-                        repeatingView.add(new Label(repeatingView.newChildId(), personDto.getLastName()));
-                        repeatingView.add(new Label(repeatingView.newChildId(), personDto.getEmail()));
+                        repeatingView.add(new Label(repeatingView.newChildId(), buildingDto.getName()));
+                        repeatingView.add(new Label(repeatingView.newChildId(), buildingDto.getLocation()));
                         item.add(repeatingView);
                         item.add(AttributeModifier.replace("class", new AbstractReadOnlyModel<String>() {
                             private static final long serialVersionUID = 1L;
@@ -95,7 +93,7 @@ public class PersonPageContentPanel extends Panel {
                 };
                 add(dataView);
             } catch (Exception ex) {
-                logger.error("exception while getting person data");
+                logger.error("exception while getting buildings data");
             }
         }
     }

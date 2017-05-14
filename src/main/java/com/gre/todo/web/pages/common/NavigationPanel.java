@@ -1,5 +1,6 @@
 package com.gre.todo.web.pages.common;
 
+import com.gre.todo.web.pages.building.BuildingPage;
 import com.gre.todo.web.pages.person.PersonPage;
 import com.gre.todo.web.pages.project.TodoListPage;
 import com.gre.todo.web.pages.home.HomePage;
@@ -16,6 +17,7 @@ public class NavigationPanel extends Panel {
         add(new BookmarkablePageLink<>("homeLink", HomePage.class));
         add(new BookmarkablePageLink<>("todoLink", TodoListPage.class));
         add(new BookmarkablePageLink<>("personLink", PersonPage.class));
+        add(new BookmarkablePageLink<>("buildingLink", BuildingPage.class));
     }
 
 }

@@ -1,5 +1,6 @@
 package com.gre.todo.services;
 
+import com.gre.todo.dto.BuildingDto;
 import com.gre.todo.dto.Lookup;
 import com.gre.todo.dto.PersonDto;
 import com.gre.todo.dto.ProjectProgressDto;
@@ -7,10 +8,7 @@ import com.gre.todo.model.Building;
 import com.gre.todo.model.Person;
 import com.gre.todo.model.Project;
 import com.gre.todo.model.ProjectProgress;
-import com.gre.todo.repository.PersonRepo;
-import com.gre.todo.repository.PersonRepoImpl;
-import com.gre.todo.repository.ProjectProgressRepo;
-import com.gre.todo.repository.ProjectProgressRepoImpl;
+import com.gre.todo.repository.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.BeanUtils;
@@ -53,22 +51,31 @@ public class ProjectProgressServiceImpl implements ProjectProgressService {
      * @return
      */
     @Override
-    public List<Lookup> findAllBuildings() {
-        ProjectProgressRepo projectProgressRepo = new ProjectProgressRepoImpl();
+    public List<BuildingDto> findAllBuildings() {
+
+        BuildingRepo buildingRepo = new BuildingRepoImpl();
         logger.info("calling dao to load all buildings");
-        List<Building> allBuildings = projectProgressRepo.findAllBuildings();
-        List<Lookup> buildingLookup = new ArrayList<Lookup>();
+        List<Building> allBuildings = buildingRepo.getAllBuildings();
+        List<BuildingDto> buildingDtoList = new ArrayList<BuildingDto>();
         if (allBuildings != null) {
-            Lookup lookup = null;
+            BuildingDto buildingDto = null;
             for (Building building : allBuildings) {
-                lookup = new Lookup();
-                lookup.setId(building.getId());
-                lookup.setName(building.getName());
-                buildingLookup.add(lookup);
+                buildingDto = new BuildingDto();
+                BeanUtils.copyProperties(building, buildingDto);
+                buildingDtoList.add(buildingDto);
             }
         }
-        return buildingLookup;
+        return buildingDtoList;
     }
+
+    @Override
+    public void saveBuilding(BuildingDto buildingDto) {
+        BuildingRepo buildingRepo = new BuildingRepoImpl();
+        Building building = new Building();
+        BeanUtils.copyProperties(buildingDto, building);
+        buildingRepo.saveBuilding(building);
+    }
+
 
     /**
      * get all persons info
@@ -96,7 +103,7 @@ public class ProjectProgressServiceImpl implements ProjectProgressService {
     public void savePerson(PersonDto personDto) {
         PersonRepo personRepo = new PersonRepoImpl();
         Person person = new Person();
-        BeanUtils.copyProperties(personDto,person);
+        BeanUtils.copyProperties(personDto, person);
         personRepo.savePerson(person);
     }
 

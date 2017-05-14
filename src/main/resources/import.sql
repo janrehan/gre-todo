@@ -1,6 +1,21 @@
 \c database tests;
+
+CREATE SEQUENCE project_id_seq;
+ALTER TABLE project ALTER COLUMN id SET DEFAULT nextval('project_id_seq');
+SELECT setval('project_id_seq', 0);
+
 CREATE SEQUENCE person_id_seq;
 ALTER TABLE person ALTER COLUMN id SET DEFAULT nextval('person_id_seq');
+SELECT setval('person_id_seq', 11);
+
+CREATE SEQUENCE building_id_seq;
+ALTER TABLE building ALTER COLUMN id SET DEFAULT nextval('building_id_seq');
+SELECT setval('building_id_seq', 11);
+
+CREATE SEQUENCE project_prog_id_seq;
+ALTER TABLE project_progress ALTER COLUMN id SET DEFAULT nextval('project_prog_id_seq');
+SELECT setval('project_prog_id_seq', 0);
+
 INSERT INTO project (id, name) VALUES (1, 'Cleaning Facade');
 INSERT INTO project (id, name) VALUES (2, 'Fixing Defects');
 INSERT INTO project (id, name) VALUES (3, 'Renewing Fire Extinguishers');

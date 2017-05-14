@@ -1,5 +1,6 @@
 package com.gre.todo.web.pages.project;
 
+import com.gre.todo.dto.BuildingDto;
 import com.gre.todo.dto.Lookup;
 import com.gre.todo.dto.PersonDto;
 import com.gre.todo.dto.ProjectProgressDto;
@@ -41,7 +42,7 @@ public class TodoListPageContentPanel extends Panel {
      */
     class TodoListForm extends Form {
         private DropDownChoice<Lookup> projectsLookupChoice;
-        private DropDownChoice<Lookup> buildingLookupChoice;
+        private DropDownChoice<BuildingDto> buildingLookupChoice;
         private DropDownChoice<PersonDto> personLookupChoice;
 
         /**
@@ -136,10 +137,10 @@ public class TodoListPageContentPanel extends Panel {
          */
         private void populateBuildingDropDown() {
             ProjectProgressService service = new ProjectProgressServiceImpl();
-            List<Lookup> allProjects = service.findAllBuildings();
-            Model<Lookup> listModel = new Model<Lookup>();
-            ChoiceRenderer<Lookup> projectRender = new ChoiceRenderer<Lookup>("name", "id");
-            buildingLookupChoice = new DropDownChoice<Lookup>("buildings", listModel, allProjects, projectRender) {
+            List<BuildingDto> allProjects = service.findAllBuildings();
+            Model<BuildingDto> listModel = new Model<BuildingDto>();
+            ChoiceRenderer<BuildingDto> projectRender = new ChoiceRenderer<BuildingDto>("name", "id");
+            buildingLookupChoice = new DropDownChoice<BuildingDto>("buildings", listModel, allProjects, projectRender) {
                 @Override
                 protected boolean wantOnSelectionChangedNotifications() {
                     return true;

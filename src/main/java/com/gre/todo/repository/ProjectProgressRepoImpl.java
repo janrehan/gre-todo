@@ -1,7 +1,5 @@
 package com.gre.todo.repository;
 
-import com.gre.todo.model.Building;
-import com.gre.todo.model.Person;
 import com.gre.todo.model.Project;
 import com.gre.todo.model.ProjectProgress;
 import org.apache.logging.log4j.LogManager;
@@ -70,21 +68,5 @@ public class ProjectProgressRepoImpl implements ProjectProgressRepo {
         session.close();
         return resultList;
     }
-
-    /**
-     * get all building
-     *
-     * @return
-     */
-    @Override
-    public List<Building> findAllBuildings() {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        Query query = session.createQuery("FROM Building");
-        List<Building> resultList = query.getResultList();
-        session.close();
-        return resultList;
-    }
-
-
 
 }

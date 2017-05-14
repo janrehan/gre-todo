@@ -1,9 +1,14 @@
 package com.gre.todo.dto;
 
+import java.io.Serializable;
+
 /**
  * Created by Jan_R on 14/05/2017.
  */
-public class BuildingDto {
+public class BuildingDto implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     private Long id;
     private String name;
     private String location;

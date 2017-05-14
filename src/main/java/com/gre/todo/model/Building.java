@@ -20,10 +20,6 @@ public class Building {
     @Column(name = "location")
     private String location;
 
-    @OneToMany(mappedBy = "building", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<ProjectProgress> projectProgress;
-
-
     public Long getId() {
         return id;
     }
@@ -38,14 +34,6 @@ public class Building {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Set<ProjectProgress> getProjectProgress() {
-        return projectProgress;
-    }
-
-    public void setProjectProgress(Set<ProjectProgress> projectProgress) {
-        this.projectProgress = projectProgress;
     }
 
     public String getLocation() {

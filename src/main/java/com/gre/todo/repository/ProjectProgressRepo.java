@@ -20,13 +20,6 @@ public interface ProjectProgressRepo {
     public List<Project> findAllProjects();
 
     /**
-     * get all registered buildings
-     *
-     * @return
-     */
-    public List<Building> findAllBuildings();
-
-    /**
      * find project's associated buildings, person and status info
      * by projectId, buildingId and personId
      *
