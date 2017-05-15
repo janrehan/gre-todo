@@ -6,6 +6,7 @@ import com.gre.todo.dto.PersonDto;
 import com.gre.todo.dto.ProjectProgressDto;
 import com.gre.todo.services.ProjectProgressService;
 import com.gre.todo.services.ProjectProgressServiceImpl;
+import com.gre.todo.web.util.HelperUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.wicket.AttributeModifier;
@@ -37,9 +38,6 @@ public class TodoListPageContentPanel extends Panel {
         add(new TodoListForm("todoListForm"));
     }
 
-    /**
-     *
-     */
     class TodoListForm extends Form {
         private DropDownChoice<Lookup> projectsLookupChoice;
         private DropDownChoice<BuildingDto> buildingLookupChoice;
@@ -54,27 +52,31 @@ public class TodoListPageContentPanel extends Panel {
             super(id);
             setDefaultModel(new CompoundPropertyModel(this));
             logger.info("populating dropdowns");
-            populateProjectDropDown();
-            populateBuildingDropDown();
-            populatePersonDropDown();
+            projectsLookupChoice = HelperUtil.populateProjectDropDown();
+            add(projectsLookupChoice);
+            buildingLookupChoice = HelperUtil.populateBuildingDropDown();
+            add(buildingLookupChoice);
+            personLookupChoice = HelperUtil.populatePersonDropDown();
+            add(personLookupChoice);
             logger.info("loading all projects");
-            fetchTodosList(null, null, null);
+            //call service method to get all projects
+            DataView<ProjectProgressDto> dataView = HelperUtil.getAllProjects(null, null, null);
+            add(dataView);
         }
-
 
         /**
          *
          */
         public final void onSubmit() {
             logger.info("filtering projects on form submit");
-            processTodoListFilterRequest();
+            processApplyFilterRequest();
         }
 
         /**
          * this method takes user input and filter project
-         * todos based on that input params
+         * todos based on those input params
          */
-        private void processTodoListFilterRequest() {
+        private void processApplyFilterRequest() {
             remove("rows");
             Long projectId = null;
             Long buildingId = null;
@@ -89,109 +91,8 @@ public class TodoListPageContentPanel extends Panel {
                 personId = personLookupChoice.getModel().getObject().getId();
 
             //call service method to filter projects
-            fetchTodosList(projectId, buildingId, personId);
-
-        }
-
-        /**
-         * this method call service methods to get project progress or project's todos
-         *
-         * @param projectId
-         * @param buildingId
-         * @param personId
-         */
-        private void fetchTodosList(Long projectId, Long buildingId, Long personId) {
-
-            ProjectProgressService service = new ProjectProgressServiceImpl();
-            logger.info("calling service method to filter projects against");
-            List<ProjectProgressDto> ProjectProgressDtoResultList = service.findProjectProgressBy(projectId, buildingId, personId);
-
-            ListDataProvider<ProjectProgressDto> listDataProvider = new ListDataProvider<ProjectProgressDto>(ProjectProgressDtoResultList);
-            DataView<ProjectProgressDto> dataView = new DataView<ProjectProgressDto>("rows", listDataProvider) {
-                @Override
-                protected void populateItem(final Item<ProjectProgressDto> item) {
-                    ProjectProgressDto projectProgressDto = item.getModelObject();
-                    RepeatingView repeatingView = new RepeatingView("dataRow");
-                    repeatingView.add(new Label(repeatingView.newChildId(), projectProgressDto.getProjectName()));
-                    repeatingView.add(new Label(repeatingView.newChildId(), projectProgressDto.getBuildingName()));
-                    repeatingView.add(new Label(repeatingView.newChildId(), projectProgressDto.getPersonName()));
-                    repeatingView.add(new Label(repeatingView.newChildId(), projectProgressDto.isStatusDone() == true ? "DONE" : "NOT DONE"));
-
-                    item.add(repeatingView);
-                    item.add(AttributeModifier.replace("class", new AbstractReadOnlyModel<String>() {
-                        private static final long serialVersionUID = 1L;
-
-                        @Override
-                        public String getObject() {
-                            return (item.getIndex() % 2 == 1) ? "even" : "odd";
-                        }
-                    }));
-                }
-            };
+            DataView<ProjectProgressDto> dataView = HelperUtil.getAllProjects(projectId, buildingId, personId);
             add(dataView);
         }
-
-
-        /**
-         * method to populate building dropdown
-         */
-        private void populateBuildingDropDown() {
-            ProjectProgressService service = new ProjectProgressServiceImpl();
-            List<BuildingDto> allProjects = service.findAllBuildings();
-            Model<BuildingDto> listModel = new Model<BuildingDto>();
-            ChoiceRenderer<BuildingDto> projectRender = new ChoiceRenderer<BuildingDto>("name", "id");
-            buildingLookupChoice = new DropDownChoice<BuildingDto>("buildings", listModel, allProjects, projectRender) {
-                @Override
-                protected boolean wantOnSelectionChangedNotifications() {
-                    return true;
-                }
-            };
-            buildingLookupChoice.setNullValid(true);
-            add(buildingLookupChoice);
-        }
-
-
-        /**
-         * method to populate project dropdown
-         */
-        private void populateProjectDropDown() {
-            ProjectProgressService service = new ProjectProgressServiceImpl();
-            List<Lookup> allProjects = service.findAllProjects();
-            Model<Lookup> listModel = new Model<Lookup>();
-            ChoiceRenderer<Lookup> projectRender = new ChoiceRenderer<Lookup>("name", "id");
-            projectsLookupChoice = new DropDownChoice<Lookup>("projects", listModel, allProjects, projectRender) {
-                @Override
-                protected boolean wantOnSelectionChangedNotifications() {
-                    return true;
-                }
-            };
-            projectsLookupChoice.setNullValid(true);
-
-            add(projectsLookupChoice);
-        }
-
-        /**
-         * method to populate person drop down
-         */
-        private void populatePersonDropDown() {
-            try {
-                ProjectProgressService service = new ProjectProgressServiceImpl();
-                List<PersonDto> allPersons = service.findAllPersons();
-                Model<PersonDto> listModel = new Model<PersonDto>();
-                ChoiceRenderer<PersonDto> projectRender = new ChoiceRenderer<PersonDto>("firstName", "id");
-                personLookupChoice = new DropDownChoice<PersonDto>("persons", listModel, allPersons, projectRender) {
-                    @Override
-                    protected boolean wantOnSelectionChangedNotifications() {
-                        return true;
-                    }
-                };
-                personLookupChoice.setNullValid(true);
-                add(personLookupChoice);
-            } catch (Exception ex) {
-                logger.error("exception " + ex);
-            }
-        }
-
     }
-
 }

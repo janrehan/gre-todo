@@ -4,6 +4,7 @@ import com.gre.todo.dto.BuildingDto;
 import com.gre.todo.dto.Lookup;
 import com.gre.todo.dto.PersonDto;
 import com.gre.todo.dto.ProjectProgressDto;
+
 import java.util.List;
 
 /**
@@ -27,7 +28,6 @@ public interface ProjectProgressService {
 
 
     /**
-     *
      * @param buildingDto
      */
     public void saveBuilding(BuildingDto buildingDto);
@@ -38,14 +38,27 @@ public interface ProjectProgressService {
      *
      * @return
      */
-    public List<PersonDto> findAllPersons() throws Exception ;
+    public List<PersonDto> findAllPersons() throws Exception;
 
     /**
-     *
      * @param person
      */
     public void savePerson(PersonDto person);
 
+
+    /**
+     * @param email
+     * @return
+     */
+    public boolean isPersonAlreadyExist(String email);
+
+
+    /**
+     *
+     * @param email
+     * @return
+     */
+    public boolean removePersonByEmail(String email);
 
     /**
      * find project's associated buildings, person and status info

@@ -107,6 +107,28 @@ public class ProjectProgressServiceImpl implements ProjectProgressService {
         personRepo.savePerson(person);
     }
 
+    @Override
+    public boolean isPersonAlreadyExist(String email) {
+        PersonRepo personRepo = new PersonRepoImpl();
+        Person personByEmail = personRepo.getPersonByEmail(email);
+        if(personByEmail!=null){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean removePersonByEmail(String email){
+        PersonRepo personRepo = new PersonRepoImpl();
+        int resutl = personRepo.removePersonByEmail(email);
+        if(resutl>0){
+            return true;
+        }
+        return false;
+    }
+
+
+
     /**
      * find project's associated buildings, person and status info
      * by projectId, buildingId and personId

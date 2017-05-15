@@ -16,4 +16,7 @@ public interface PersonRepo {
 
     public List<Person> getAllPersons();
 
+    public Person getPersonByEmail(String email);
+
+    public int removePersonByEmail(String email);
 }
